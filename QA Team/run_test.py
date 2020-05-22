@@ -4,15 +4,17 @@
 import random
 
 from create_testable_matrix 			  import create_testable_matrix
+from create_mejarden_matrix				  import create_mejarden_matrix
+from create_jordan_matrix				  import create_jordan_matrix
 from test_returned_min_polynom 			  import test_returned_min_polynom
 from test_char_polynom 					  import test_returned_characteristic_polynom
 from test_returned_jordan_chevallier 	  import test_returned_jordan_chevallier
 from test_returned_P_Mejardenet_matrix    import test_returned_P_Mejardenet_matrix
 
-#from matrix import Matrix for testing, when it exists
+#from matrix import # Matrix for testing, when it exists
 
 def run_test(eigen, blocks):	
-	J, size = create_jordan_matrix(l)
+	J, size = create_jordan_matrix(eigen, blocks)
 	P = create_mejarden_matrix(size)
 	A = create_testable_matrix(P, J)
 	M = Matrix(A)
