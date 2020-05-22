@@ -1,5 +1,6 @@
 import numpy as np
 import numpy.linalg
+from numpy.linalg import matrix_rank
 
 class Matrix():
     def __init__(self, matrix : np.ndarray):
@@ -114,11 +115,70 @@ class Matrix():
         :return:
         '''
 
-    def getJordanForm(self):
-        '''
+    @staticmethod
+    def combine_jordan_blocks(blocks, size):
+        res = np.zeros((size, size))
+        i = 0
+        for block in blocks:
+            for j in range(block[1] - 1):
+                res[i + j][i + j] = block[0]
+                res[i + j][i + j + 1] = 1
 
-        :return:
-        '''
+            res[i + block[1] - 1][i + block[1] - 1] = block[0]
+
+            i += block[1]
+
+        return res
+
+
+    def getJordanForm(self):
+        """
+
+        :return: List of tuples
+        """
+
+        # ALGORITHM:
+        # 1. Get eigenvalue from minimal polynom
+        # 2.
+        #           Loop1:  for each ev:
+        #           Loop2:      for power in range(1 to power_of_ev_in_min_pol):
+        #
+        #                           # Calculating number of blocks of size power for ev
+        #                           num = 2*dimKer(A-lambda*I)^block_size - dimKer(A-lambda*I)^(block_size+1) -
+        #                                                                            - dimKer(A-lambda*I)^(block_size-1)
+        #                           # Adding blocks to output as tuple of (ev and block size)
+        # 3. Construct the output matrix out of Jordan blocks
+
+        result = []
+        minimal_pol = self.getMinimalPolynomial()
+
+        for row in minimal_pol:
+            ev = row[0]
+            n = self.matrix[0].size
+
+            identity_m = np.identity(n)
+            tmp_matrix = self.matrix - ev * identity_m  # A - lambda*I
+
+            mat_1 = np.identity(n)
+            mat_2 = tmp_matrix
+            mat_3 = tmp_matrix @ tmp_matrix
+
+            dim_ker_1 = n - matrix_rank(mat_1)
+            dim_ker_2 = n - matrix_rank(mat_2)
+            dim_ker_3 = n - matrix_rank(mat_3)
+
+            for block_size in range(1, row[1] + 1):
+                number_of_blocks = 2 * dim_ker_2 - dim_ker_1 - dim_ker_3
+
+                # Updates the arguments for the next iteration
+                mat_3 = mat_3 @ tmp_matrix
+                dim_ker_1 = dim_ker_2
+                dim_ker_2 = dim_ker_3
+                dim_ker_3 = n - matrix_rank(mat_3)
+
+                [result.append((ev, block_size)) for _ in range(number_of_blocks)]
+
+        return Matrix.combine_jordan_blocks(result, n)
 
     def getGCD(self):
         '''
