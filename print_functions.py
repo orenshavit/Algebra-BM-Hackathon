@@ -4,6 +4,6 @@ from IPython.display import Latex
 
 
 def print_matrix(np_array_matrix):
-    latex_code = a2l.to_ltx(np_array_matrix, frmt = '{:2f}', arraytype = 'pmatrix',print_out=False)
+    latex_code = a2l.to_ltx(
+        np_array_matrix, frmt='{:2f}', arraytype='pmatrix', print_out=False)
     return Latex(latex_code)
-    
