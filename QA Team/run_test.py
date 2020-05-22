@@ -1,25 +1,41 @@
-import numpy
+# %%
+
+from create_testable_matrix 			  import create_testable_matrix
+from test_returned_min_polynom 			  import test_returned_min_polynom
+from test_returned_characteristic_polynom import test_returned_characteristic_polynom
+from test_returned_jordan_chevalier 	  import test_returned_jordan_chevalier
+from test_returned_P_Mejardenet_matrix    import test_returned_P_Mejardenet_matrix
 
 def run_test(l):	
 	J, size = create_jordan_matrix(l)
 	P = create_mejarden_matrix(size)
 	A = create_testable_matrix(P, J)
 	M = Matrix(A)
+	
+	if (test_returned_P_Mejardenet_matrix(A, M.getJordanForm(), M.getPmejardent())):
+		print("P and J matricies are good")
+	else:
+		print("P and J matricies are bad")
+		return False
+	
 	if (test_returned_min_polynom(A, M.getCharacteristicPolynomial())):
 		print("min polynom is good")
 	else:
 		print("min polynom is bad")
 		return False
+	
 	if (test_returned_characteristic_polynom(A, M.getMinimalPolynomial())):
 		print("characteristic polynom is good")
 	else:
 		print("characteristic polynom is bad")
 		return False
+	
 	if (test_returned_jordan_chevalier(A, M.getSmatrix(), M.getNmatrix())):
 		print("jordan chevalier matricies are good")
 	else:
 		print("jordan chevalier matricies are bad")
 		return False
+		
 	return True
 
 
