@@ -1,8 +1,6 @@
 import numpy
 
-def run_test():
-	l = [(1,1),(2,1),(3,1)]
-	# l = diag with 1,2,3 on the diag
+def run_test(l):	
 	J, size = create_jordan_matrix(l)
 	P = create_mejarden_matrix(size)
 	A = create_testable_matrix(P, J)
@@ -23,3 +21,22 @@ def run_test():
 		print("jordan chevalier matricies are bad")
 		return False
 	return True
+
+
+d = [(1,1),(2,1),(3,1)]
+# d = diag with 1,2,3 on the diag
+run_test(d)
+l = [(1,2),(0,2),(3,1)]
+# l = jordan matrix that looks like this:
+'''
+1 1
+0 1
+    0 1
+	0 0
+	    3
+'''
+run_test(l)
+
+
+
+
