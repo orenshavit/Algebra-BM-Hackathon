@@ -52,11 +52,60 @@ class Matrix():
         pass
 
     def getPmejardent(self):
-        '''
+        # what getEigenvectors returs?
+        eag_vectors_map = self.getEigenvectors()
+        eag_muhlalim_map = []
+        P = np.zeros_like(self)
+        if self.isDiagonalizableMatrix:
+            for i, vector in enumerate(eag_vectors_map):
+                P[:, i] = eag_vectors_map[i]
+            return P
 
-        :return:
-        '''
-        pass
+        char_poly = self.getCharacteristicPolynomial()
+        base_list = []
+        for eag_value, eag_vectors in eag_vectors_map.items():
+            r_g = len(eag_vectors)
+            r_a = -1
+            min_poly_pow = -1
+            for line in char_poly:
+                if line[0] == eag_value:
+                    r_a = line[1]
+                    break
+            for line in min_poly:
+                if line[0] == eag_value:
+                    min_poly_pow = line[1]
+                    break
+            num_of_eag_muhlalim = r_g - r_a
+            min_poly = self.getMinimalPolynomial()
+            while num_of_eag_muhlalim > 0:
+                # pow should be power from min_poly
+                A = (self.matrix - (eag_value * np.eye(self.matrix.shape[0])))
+                A_pow = np.linalg.matrix_power(A, min_poly_pow)
+                tmp, eag_muhlalim = np.linalg.eig(A_pow)
+                for vector in eag_muhlalim:
+                    if self.checkIfMuhlal(A, vector, min_poly_pow):
+                        self.findJordanChain(A, vector, min_poly_pow, base_list)
+                num_of_eag_muhlalim -= 1
+        P = numpy.stack(base_list, axis=1)
+        return P
+
+
+    def checkIfMuhlal(self, A, vector, min_poly_pow):
+        min_poly_pow -= 1
+        while min_poly_pow > 0:
+            A_pow_tmp = np.linalg.matrix_power(A, min_poly_pow)
+            if A_pow_tmp @ vector == 0:
+                return False
+            min_poly_pow -= 1
+        return True
+
+    def findJordanChain(self, A, vector, min_poly_pow, base_list):
+        min_poly_pow -= 1
+        base_list.append(vector)
+        for tmp_pow in range(1, min_poly_pow, 1):
+            A_pow_tmp = np.linalg.matrix_power(A, tmp_pow)
+            base_list.append(A_pow_tmp @ vector)
+        return True
 
     def getGeoMul(self):
         '''
