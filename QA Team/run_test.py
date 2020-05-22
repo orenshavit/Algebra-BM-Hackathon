@@ -1,5 +1,7 @@
 # %%
 
+import random
+
 from create_testable_matrix 			  import create_testable_matrix
 from test_returned_min_polynom 			  import test_returned_min_polynom
 from test_returned_characteristic_polynom import test_returned_characteristic_polynom
@@ -38,10 +40,21 @@ def run_test(l):
 		
 	return True
 
+def random_realNumbers_tests(num_tests):
+	for i in range(num_tests):
+		# set how many jordan-blocks
+		blocks = random.randint(1,5)
+		l = []
+		for b in range(blocks):
+			# eigenvalue to be from range -10 to 10, and jordan block to be in size 1-8
+			l.append((random.randint(-10,10), random.randint(1,8)))
+		run_test(l)
+
 
 d = [(1,1),(2,1),(3,1)]
 # d = diag with 1,2,3 on the diag
 run_test(d)
+
 l = [(1,2),(0,2),(3,1)]
 # l = jordan matrix that looks like this:
 '''
@@ -53,6 +66,19 @@ l = [(1,2),(0,2),(3,1)]
 '''
 run_test(l)
 
+l = [(i,2),(-i,2),(3,3)]
+# l = jordan matrix that looks like this:
+'''
+i 1
+0 i
+    -i 1
+	0  i
+	    3 1
+		0 3 1
+		0 0 3 
+'''
+run_test(l)
 
+random_realNumbers_tests(50)
 
 
