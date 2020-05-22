@@ -1,16 +1,24 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import numpy as np
+
 def is_diagnosiable(M):
     values, vectors = np.linalg.eig(np.array(M))
     if len(vectors) != len(M):
         print("S not diagoniasble")
         return False
     return True
+
+
 def is_nilpotent(M):
     values = np.linalg.eigvals(np.array(M))
     for i in values:
         if i != 0:
             return False
     return True
+
+
 def test_returned_jordan_chevallier(T, S, N):
     shape_s = S.shape
     shape_n = N.shape
@@ -47,4 +55,5 @@ def test_returned_jordan_chevallier(T, S, N):
         print("N is not Nilpotent")
         return False
     return True
+
 

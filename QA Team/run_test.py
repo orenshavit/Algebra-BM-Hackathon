@@ -1,13 +1,15 @@
-# %%
+#!/usr/bin/env python
+# coding: utf-8
 
 import random
 
 from create_testable_matrix 			  import create_testable_matrix
 from test_returned_min_polynom 			  import test_returned_min_polynom
-from test_returned_characteristic_polynom import test_returned_characteristic_polynom
-from test_returned_jordan_chevalier 	  import test_returned_jordan_chevalier
+from test_char_polynom 					  import test_returned_characteristic_polynom
+from test_returned_jordan_chevallier 	  import test_returned_jordan_chevallier
 from test_returned_P_Mejardenet_matrix    import test_returned_P_Mejardenet_matrix
-from matrix import Matrix
+
+#from matrix import Matrix for testing, when it exists
 
 def run_test(eigen, blocks):	
 	J, size = create_jordan_matrix(l)
@@ -27,7 +29,7 @@ def run_test(eigen, blocks):
 		print("min polynom is bad")
 		return False
 	
-	if (test_returned_characteristic_polynom(A, M.getMinimalPolynomial())):
+	if (test_returned_characteristic_polynom(M.getMinimalPolynomial(), A)):
 		print("characteristic polynom is good")
 	else:
 		print("characteristic polynom is bad")

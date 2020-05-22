@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import numpy.polynomial.polynomial as np
 import scipy.linalg as la
 
@@ -7,7 +10,7 @@ def mat_pol_solve (arr_coef, matrix):
     poly_of_matirces = []
     for i in len(arr_coef):
         temp = matrix
-        for j in range(0:i):
+        for j in range(0,i):
             temp = temp@matrix
         poly_of_matirces[i] = temp*arr_coef[i]
     return poly_of_matirces.sum()

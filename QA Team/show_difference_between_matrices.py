@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import numpy
 
 def show_difference_between_matrices(matrix1, matrix2):
