@@ -1,12 +1,18 @@
 import numpy as np
 import numpy.linalg
+import itertools
 
 class Matrix():
+    
     def __init__(self, matrix : np.ndarray):
         '''
         :param matrix: ndarray matrix (C)
         '''
         self.matrix = matrix
+        self.eig_val,_ = np.linalg.eig(self.matrix)
+        self.charPoly = self.getCharacteristicPolynomial()
+        self.minPoly = None
+        self.isDiagonal = None
 
     def __call__(self, *args, **kwargs):
         '''
@@ -23,18 +29,18 @@ class Matrix():
 
     def getCharacteristicPolynomial(self):
         '''
-
         :return:
         '''
-        pass
+        unique_elements, counts_elements = np.unique(self.eig_val, return_counts=True)
+        charPoly = np.array([[unique_elements],[counts_elements]])
+        return charPoly.transpose()
 
     def getMinimalPolynomial(self):
         '''
-
+        
         :return:
         '''
-        pass
-
+        
     def isDiagonalizableMatrix(self):
         '''
 
