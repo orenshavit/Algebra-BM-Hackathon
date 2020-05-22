@@ -55,13 +55,14 @@ class Matrix():
         # what getEigenvectors returs?
         eag_vectors_map = self.getEigenvectors()
         eag_muhlalim_map = []
-        P = np.zeros_like(self)
+        P = np.zeros_like(self.matrix)
         if self.isDiagonalizableMatrix:
             for i, vector in enumerate(eag_vectors_map):
                 P[:, i] = eag_vectors_map[i]
             return P
 
         char_poly = self.getCharacteristicPolynomial()
+        min_poly = self.getMinimalPolynomial()
         base_list = []
         for eag_value, eag_vectors in eag_vectors_map.items():
             r_g = len(eag_vectors)
@@ -76,7 +77,7 @@ class Matrix():
                     min_poly_pow = line[1]
                     break
             num_of_eag_muhlalim = r_g - r_a
-            min_poly = self.getMinimalPolynomial()
+
             while num_of_eag_muhlalim > 0:
                 # pow should be power from min_poly
                 A = (self.matrix - (eag_value * np.eye(self.matrix.shape[0])))
