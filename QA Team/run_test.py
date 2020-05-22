@@ -7,6 +7,7 @@ from test_returned_min_polynom 			  import test_returned_min_polynom
 from test_returned_characteristic_polynom import test_returned_characteristic_polynom
 from test_returned_jordan_chevalier 	  import test_returned_jordan_chevalier
 from test_returned_P_Mejardenet_matrix    import test_returned_P_Mejardenet_matrix
+from matrix import Matrix
 
 def run_test(eigen, blocks):	
 	J, size = create_jordan_matrix(l)
