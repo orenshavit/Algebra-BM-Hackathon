@@ -6,7 +6,7 @@ import numpy as np
 #All rights reserved to Aviad Shiber & Tal Gelbard inc
 """
 The function create_jordan_matrix get a list of eigen values and a list of the size of blocks.
-the function returns a jordan matrix of type numpy.ndarray
+the function returns a pair of (J,Size) when J is jordan matrix of type numpy.ndarray and Size is the dimension of the matrix
 """
 def create_jordan_matrix(eigenValues, sizeOfBlocks):
     n=sum(sizeOfBlocks)
@@ -47,7 +47,8 @@ def create_jordan_matrix(eigenValues, sizeOfBlocks):
                 l = l + 1
 
 
-    return jordan
+    return (jordan,n)
+
 
 """
 example of use:
