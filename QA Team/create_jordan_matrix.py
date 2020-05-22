@@ -54,10 +54,10 @@ def create_jordan_matrix(eigenValues, sizeOfBlocks):
 example of use:
     print(create_jordan_matrix([5,4] ,[1,3]))
 expected output:
-    [[5. 0. 0. 0.]
-    [0. 4. 1. 0.]
-    [0. 0. 4. 1.]
-    [0. 0. 0. 4.]]
+    (array([[5., 0., 0., 0.],
+       [0., 4., 1., 0.],
+       [0., 0., 4., 1.],
+       [0., 0., 0., 4.]]), 4)
 """
         
         
