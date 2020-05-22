@@ -8,7 +8,7 @@ from test_returned_characteristic_polynom import test_returned_characteristic_po
 from test_returned_jordan_chevalier 	  import test_returned_jordan_chevalier
 from test_returned_P_Mejardenet_matrix    import test_returned_P_Mejardenet_matrix
 
-def run_test(l):	
+def run_test(eigen, blocks):	
 	J, size = create_jordan_matrix(l)
 	P = create_mejarden_matrix(size)
 	A = create_testable_matrix(P, J)
@@ -44,19 +44,23 @@ def random_realNumbers_tests(num_tests):
 	for i in range(num_tests):
 		# set how many jordan-blocks
 		blocks = random.randint(1,5)
-		l = []
+		eigen = []
+		blocks = []
 		for b in range(blocks):
 			# eigenvalue to be from range -10 to 10, and jordan block to be in size 1-8
-			l.append((random.randint(-10,10), random.randint(1,8)))
-		run_test(l)
+			eigen.append(random.randint(-10,10)
+			blocks.append(random.randint(1,8))
+		run_test(eigen, blocks)
 
 
-d = [(1,1),(2,1),(3,1)]
-# d = diag with 1,2,3 on the diag
-run_test(d)
+eigen = [1, 2, 3]
+blocks = [1, 1, 1]
+# diag with 1,2,3 on the diag
+run_test(eigen, blocks)
 
-l = [(1,2),(0,2),(3,1)]
-# l = jordan matrix that looks like this:
+eigen = [1, 0, 3]
+blocks = [1, 2, 1]
+# jordan matrix that looks like this:
 '''
 1 1
 0 1
@@ -64,20 +68,8 @@ l = [(1,2),(0,2),(3,1)]
 	0 0
 	    3
 '''
-run_test(l)
+run_test(eigen, blocks)
 
-l = [(i,2),(-i,2),(3,3)]
-# l = jordan matrix that looks like this:
-'''
-i 1
-0 i
-    -i 1
-	0  i
-	    3 1
-		0 3 1
-		0 0 3 
-'''
-run_test(l)
 
 random_realNumbers_tests(50)
 
